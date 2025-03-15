@@ -442,7 +442,7 @@ namespace MQTT {
      * @param username to username ,eg: "yourClientName"
      * @param clientPwd to clientPwd ,eg: "yourClientPwd"
      * @param serverIp to serverIp ,eg: "yourServerIp"
-     * @param serverPort to serverPort ,eg: 80  
+     * @param serverPort to serverPort ,eg: 1883  
  
     */
     //% weight=99
