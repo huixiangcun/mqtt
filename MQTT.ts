@@ -117,6 +117,7 @@ namespace MQTT {
         emmqttClearTxBuffer();
         // serial.clearTxBuffer();
         // onEvent();
+	basic.showIcon(IconNames.Yes);
     }
 
     /**
