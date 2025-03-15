@@ -120,10 +120,10 @@ namespace MQTT {
     }
 
     /**
-     * @param SSID to SSID ,eg: "yourSSID"
-     * @param PASSWORD to PASSWORD ,eg: "yourPASSWORD"
-     * @param receive to receive ,eg: SerialPin.P1
-     * @param send to send ,eg: SerialPin.P2
+     * @param SSID to SSID ,eg: "2-901-5G"
+     * @param PASSWORD to PASSWORD ,eg: "20230905"
+     * @param receive to receive ,eg: SerialPin.P15
+     * @param send to send ,eg: SerialPin.P14
     */
     //% weight=103
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
@@ -149,7 +149,7 @@ namespace MQTT {
      * @param clientId to clientId ,eg: "yourClientId"
      * @param username to username ,eg: "yourClientName"
      * @param clientPwd to clientPwd ,eg: "yourClientPwd"
-     * @param serverIp to serverIp ,eg: "yourServerIp"
+     * @param serverIp to serverIp ,eg: "8.130.109.109"
      * @param serverPort to serverPort ,eg: 1883  
  
     */
