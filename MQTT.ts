@@ -146,7 +146,7 @@ namespace MQTT {
 
     /**
      * 
-     * @param clientId to clientId ,eg: "yourClientId"
+     * @param clientId to clientId ,eg: "12345"
      * @param username to username ,eg: "yourClientName"
      * @param clientPwd to clientPwd ,eg: "yourClientPwd"
      * @param serverIp to serverIp ,eg: "8.130.109.109"
@@ -259,12 +259,12 @@ namespace MQTT {
 
 
     function emqtt_connect_wifi(): void {
-	atReset();
+	    atReset();
         serial.writeString("AT+CWMODE=3\r\n");
         basic.pause(100);
         serial.writeString("AT+CWJAP=\"" + MQTT_SSID + "\",\"" + MQTT_SSIDPWD + "\"\r\n");
         basic.pause(7000);	
-	basic.showIcon(IconNames.Yes);
+	    basic.showIcon(IconNames.Yes);
     }
     function atReset(): void {
 	for (let i = 0; i < 3; i++) {
@@ -341,10 +341,12 @@ namespace MQTT {
                 iconnum += 1;
             }
             if (EMMQTT_ANSWER_CMD == "MqttWifiConneted") {
+                basic.showIcon(IconNames.Happy)
                 EMMQTT_ANSWER_CMD = EMMQTT_STR_TYPE_IS_NONE
                 break
             } else if (EMMQTT_ANSWER_CMD == "MqttWifiConnectFailure") {
                 EMMQTT_ANSWER_CMD = EMMQTT_STR_TYPE_IS_NONE
+                basic.showIcon(IconNames.Sad)
                 return EMMQTT_ERROR_TYPE_IS_MQTT_CONNECT_FAILURE
             }
             basic.pause(1)
@@ -354,8 +356,9 @@ namespace MQTT {
             EMMQTT_ANSWER_CMD = EMMQTT_STR_TYPE_IS_NONE
             return EMMQTT_ERROR_TYPE_IS_MQTT_CONNECT_TIMEOUT
         }
+        basic.showIcon(IconNames.Heart)
         return EMMQTT_ERROR_TYPE_IS_SUCCE
-        //basic.showString("ok")
+        //
     }
     let Emqtt_message_str = "";
     let count = 0;
