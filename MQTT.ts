@@ -120,8 +120,8 @@ namespace MQTT {
     }
 
     /**
-     * @param SSID to SSID ,eg: "2-901-5G"
-     * @param PASSWORD to PASSWORD ,eg: "20230905"
+     * @param SSID to SSID ,eg: "Charron"
+     * @param PASSWORD to PASSWORD ,eg: "123456789"
      * @param receive to receive ,eg: SerialPin.P15
      * @param send to send ,eg: SerialPin.P14
     */
