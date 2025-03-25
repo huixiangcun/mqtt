@@ -105,7 +105,7 @@ namespace MQTT {
         serial.redirect(
             EMMQTT_SERIAL_TX,
             EMMQTT_SERIAL_RX,
-            BaudRate.BaudRate9600
+            BaudRate.BaudRate115200
         )
         serial.setTxBufferSize(128);
         serial.setRxBufferSize(128);
