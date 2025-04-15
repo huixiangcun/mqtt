@@ -220,7 +220,8 @@ namespace MQTT {
             emmqtt_serial_init()
         }
         topic = topic.replace(",", "");
-        serial.writeString("AT+MQTTPUB=0,\"" + topic + "\",\"" + data + "\",1,0\r\n");
+        //serial.writeString("AT+MQTTPUB=0,\"" + topic + "\",\"" + data + "\",1,0\r\n");
+	serial.writeString("AT+MQTTPUB=0,\"" + MQTT_CLIENT_ID + "/" + topic + "\",\"" + data + "\",1,0\r\n");
         basic.pause(200); // limit user pub rate
     }
 
@@ -237,7 +238,8 @@ namespace MQTT {
             emmqtt_serial_init()
         }
         topic = topic.replace(",", "");
-        serial.writeString("AT+MQTTSUB=0,\"" + topic + "\"," + qos + "\r\n");
+        //serial.writeString("AT+MQTTSUB=0,\"" + topic + "\"," + qos + "\r\n");
+	serial.writeString("AT+MQTTPUB=0,\"" + MQTT_CLIENT_ID + "/" + topic + "\"," + qos + "\r\n");
         basic.pause(500);
     }
 
@@ -253,7 +255,10 @@ namespace MQTT {
         if (!EMMQTT_SERIAL_INIT) {
             emmqtt_serial_init()
         }
-        mqttSubscribeHandlers[topic] = handler;
+	const fullTopic = MQTT_CLIENT_ID + "/" + topic;
+    	// 将新的主题和处理函数存储到映射中
+    	mqttSubscribeHandlers[fullTopic] = handler;
+        //mqttSubscribeHandlers[topic] = handler;
     }
 
 
