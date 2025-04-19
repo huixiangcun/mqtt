@@ -225,6 +225,18 @@ namespace MQTT {
         basic.pause(200); // limit user pub rate
     }
 
+    //% blockId=getText block="字符串| %string01" weight=22
+    //% group='自定义'
+    //% blockGap=10
+    export function returnString(string01: string):string{
+        return string01;
+    }
+    //% blockId=getNumber block="数字| %number01" weight=21
+    //% group='自定义'
+    //% blockGap=10
+    export function returnNumber(number01: number):number{
+        return number01;
+    }
     /**
      * Set MQTT subscribe
      * @param topic Mqtt topic; eg: test
