@@ -122,8 +122,8 @@ namespace MQTT {
     /**
      * @param SSID to SSID ,eg: "Charron"
      * @param PASSWORD to PASSWORD ,eg: "123456789"
-     * @param receive to receive ,eg: SerialPin.P15
-     * @param send to send ,eg: SerialPin.P14
+     * @param receive to receive ,eg: SerialPin.P14
+     * @param send to send ,eg: SerialPin.P13
     */
     //% weight=103
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
