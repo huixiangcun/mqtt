@@ -220,7 +220,8 @@ namespace MQTT {
             emmqtt_serial_init()
         }
         topic = topic.replace(",", "");
-        serial.writeString("AT+MQTTPUB=0,\"" + topic + "\",\"" + data + "\",1,0\r\n");
+        let fullTopic = MQTT_CLIENT_ID + "/" + topic;
+        serial.writeString("AT+MQTTPUB=0,\"" + fullTopic + "\",\"" + data + "\",1,0\r\n");
         basic.pause(200); // limit user pub rate
     }
 
@@ -237,7 +238,8 @@ namespace MQTT {
             emmqtt_serial_init()
         }
         topic = topic.replace(",", "");
-        serial.writeString("AT+MQTTSUB=0,\"" + topic + "\"," + qos + "\r\n");
+        let fullTopic = MQTT_CLIENT_ID + "/" + topic;
+        serial.writeString("AT+MQTTSUB=0,\"" + fullTopic + "\"," + qos + "\r\n");
         basic.pause(500);
     }
 
@@ -253,7 +255,8 @@ namespace MQTT {
         if (!EMMQTT_SERIAL_INIT) {
             emmqtt_serial_init()
         }
-        mqttSubscribeHandlers[topic] = handler;
+        let fullTopic = MQTT_CLIENT_ID + "/" + topic;
+        mqttSubscribeHandlers[fullTopic] = handler;
     }
 
 
