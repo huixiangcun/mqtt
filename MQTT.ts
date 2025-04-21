@@ -105,7 +105,7 @@ namespace MQTT {
         serial.redirect(
             EMMQTT_SERIAL_TX,
             EMMQTT_SERIAL_RX,
-            BaudRate.BaudRate115200
+            BaudRate.BaudRate9600
         )
         serial.setTxBufferSize(128);
         serial.setRxBufferSize(128);
@@ -120,10 +120,10 @@ namespace MQTT {
     }
 
     /**
-     * @param SSID to SSID ,eg: "Charron"
-     * @param PASSWORD to PASSWORD ,eg: "123456789"
-     * @param receive to receive ,eg: SerialPin.P14
-     * @param send to send ,eg: SerialPin.P13
+     * @param SSID to SSID ,eg: "yourSSID"
+     * @param PASSWORD to PASSWORD ,eg: "yourPASSWORD"
+     * @param receive to receive ,eg: SerialPin.P1
+     * @param send to send ,eg: SerialPin.P2
     */
     //% weight=103
     //% receive.fieldEditor="gridpicker" receive.fieldOptions.columns=3
@@ -146,10 +146,10 @@ namespace MQTT {
 
     /**
      * 
-     * @param clientId to clientId ,eg: "12345"
+     * @param clientId to clientId ,eg: "yourClientId"
      * @param username to username ,eg: "yourClientName"
      * @param clientPwd to clientPwd ,eg: "yourClientPwd"
-     * @param serverIp to serverIp ,eg: "8.130.109.109"
+     * @param serverIp to serverIp ,eg: "yourServerIp"
      * @param serverPort to serverPort ,eg: 1883  
  
     */
@@ -220,25 +220,10 @@ namespace MQTT {
             emmqtt_serial_init()
         }
         topic = topic.replace(",", "");
-        //serial.writeString("AT+MQTTPUB=0,\"" + topic + "\",\"" + data + "\",1,0\r\n");
-	serial.writeString("AT+MQTTPUB=0,\"" + MQTT_CLIENT_ID + "/" + topic + "\",\"" + data + "\",1,0\r\n");
+        serial.writeString("AT+MQTTPUB=0,\"" + topic + "\",\"" + data + "\",1,0\r\n");
         basic.pause(200); // limit user pub rate
     }
 
-    //% blockId=getText block="字符串| %string01"
-    //% weight=99
-    //% subcategory="MQTT模式"
-    //% group='自定义'
-    export function returnString(string01: string):string{
-        return string01;
-    }
-    //% blockId=getNumber block="数字| %number01"
-    //% weight=98
-    //% subcategory="MQTT模式"
-    //% group='自定义'
-    export function returnNumber(number01: number):number{
-        return number01;
-    }
     /**
      * Set MQTT subscribe
      * @param topic Mqtt topic; eg: test
@@ -252,8 +237,7 @@ namespace MQTT {
             emmqtt_serial_init()
         }
         topic = topic.replace(",", "");
-        //serial.writeString("AT+MQTTSUB=0,\"" + topic + "\"," + qos + "\r\n");
-	serial.writeString("AT+MQTTPUB=0,\"" + MQTT_CLIENT_ID + "/" + topic + "\"," + qos + "\r\n");
+        serial.writeString("AT+MQTTSUB=0,\"" + topic + "\"," + qos + "\r\n");
         basic.pause(500);
     }
 
@@ -269,45 +253,43 @@ namespace MQTT {
         if (!EMMQTT_SERIAL_INIT) {
             emmqtt_serial_init()
         }
-	const fullTopic = MQTT_CLIENT_ID + "/" + topic;
-    	// 将新的主题和处理函数存储到映射中
-    	mqttSubscribeHandlers[fullTopic] = handler;
-        //mqttSubscribeHandlers[topic] = handler;
+        mqttSubscribeHandlers[topic] = handler;
     }
 
 
 
     function emqtt_connect_wifi(): void {
-	    atReset();
+		atReset();
         serial.writeString("AT+CWMODE=3\r\n");
         basic.pause(100);
         serial.writeString("AT+CWJAP=\"" + MQTT_SSID + "\",\"" + MQTT_SSIDPWD + "\"\r\n");
-        basic.pause(7000);	
-	    basic.showIcon(IconNames.Yes);
+        basic.pause(7000);
+		
     }
-    function atReset(): void {
-	for (let i = 0; i < 3; i++) {
-		serial.writeString("AT\r\n");
-		basic.pause(1000);
-	}
+	
+	function atReset(): void {
+		for (let i = 0; i < 3; i++) {
+			serial.writeString("AT\r\n");
+			basic.pause(1000);
+		}
         serial.writeString("AT+CWQAP\r\n");
-	serial.writeString("AT+RST\r\n");
-	basic.pause(100);
-	serial.writeString("ATE0\r\n");
-	basic.pause(100);
-	serial.writeString("AT+CWAUTOCONN=0\r\n");
-	basic.pause(100);
-	serial.writeString("AT+CWMODE=1\r\n");
-	basic.pause(200);
-	serial.writeString("AT+CIPMUX=1\r\n");
-	basic.pause(100);
-	serial.writeString("AT+CIPDINFO=1\r\n");
-	basic.pause(100);
-	serial.writeString("AT+CWAUTOCONN=0\r\n");
-	basic.pause(100);
-	serial.writeString("AT+CWDHCP=1,1\r\n");
-	basic.pause(200);
-    }
+		serial.writeString("AT+RST\r\n");
+		// basic.pause(100);
+		serial.writeString("ATE0\r\n");
+		// basic.pause(100);
+		serial.writeString("AT+CWAUTOCONN=0\r\n");
+		// basic.pause(100);
+		serial.writeString("AT+CWMODE=1\r\n");
+		basic.pause(200);
+		serial.writeString("AT+CIPMUX=1\r\n");
+		// basic.pause(100);
+		serial.writeString("AT+CIPDINFO=1\r\n");
+		// basic.pause(100);
+		serial.writeString("AT+CWAUTOCONN=0\r\n");
+		// basic.pause(100);
+		serial.writeString("AT+CWDHCP=1,1\r\n");
+		basic.pause(200);
+	}
 
     function emmqtt_connect_mqtt(): void {
         if (!EMMQTT_SERIAL_INIT) {
@@ -360,12 +342,10 @@ namespace MQTT {
                 iconnum += 1;
             }
             if (EMMQTT_ANSWER_CMD == "MqttWifiConneted") {
-                basic.showIcon(IconNames.Happy)
                 EMMQTT_ANSWER_CMD = EMMQTT_STR_TYPE_IS_NONE
                 break
             } else if (EMMQTT_ANSWER_CMD == "MqttWifiConnectFailure") {
                 EMMQTT_ANSWER_CMD = EMMQTT_STR_TYPE_IS_NONE
-                basic.showIcon(IconNames.Sad)
                 return EMMQTT_ERROR_TYPE_IS_MQTT_CONNECT_FAILURE
             }
             basic.pause(1)
@@ -375,9 +355,8 @@ namespace MQTT {
             EMMQTT_ANSWER_CMD = EMMQTT_STR_TYPE_IS_NONE
             return EMMQTT_ERROR_TYPE_IS_MQTT_CONNECT_TIMEOUT
         }
-        basic.showIcon(IconNames.Heart)
         return EMMQTT_ERROR_TYPE_IS_SUCCE
-        //
+        //basic.showString("ok")
     }
     let Emqtt_message_str = "";
     let count = 0;
@@ -464,7 +443,7 @@ namespace MQTT {
      * @param username to username ,eg: "yourClientName"
      * @param clientPwd to clientPwd ,eg: "yourClientPwd"
      * @param serverIp to serverIp ,eg: "yourServerIp"
-     * @param serverPort to serverPort ,eg: 1883  
+     * @param serverPort to serverPort ,eg: 80  
  
     */
     //% weight=99
