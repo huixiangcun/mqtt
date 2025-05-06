@@ -298,7 +298,7 @@ namespace MQTT {
         if (!EMMQTT_SERIAL_INIT) {
             emmqtt_serial_init()
         }
-        serial.writeString("AT+MQTTUSERCFG=0,1,\"" + MQTT_CLIENT_ID + "\",\"" + MQTT_CLIENT_NAME + "\",\"" + MQTT_CLIENT_PASSWORD + "\",0,0,\"\"\r\n");
+        serial.writeString("AT+MQTTUSERCFG=0,1,\"" + MQTT_CLIENT_ID + "02\",\"" + MQTT_CLIENT_NAME + "\",\"" + MQTT_CLIENT_PASSWORD + "\",0,0,\"\"\r\n");
         basic.pause(200);
         serial.writeString("AT+MQTTCONN=0,\"" + MQTT_SERVER_IP + "\"," + MQTT_SERVER_PORT + ",0\r\n");
         basic.pause(1000);
